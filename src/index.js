@@ -1,15 +1,15 @@
-const express = require('express');
-
-
-// inicializando una aplicación de Express
+const express = require("express");
+const User = require("./models/User");
+const Producto = require("./models/Producto");
+const Categoria = require("./models/Categoria");
+const Proveedor = require("./models/Proveedor");
+// inicializando una app de express
 const app = express();
 
-app.get('/', (req, res) => {
-    return res.json({ message: 'Saludos desde mi App de Node (ultimo modificado)' });
+app.get("/", function(req, res){
+    return res.json({mensaje: "Saludos desde mi App de Node (MODIFICADO) último 3"});
 });
 
-// iniciando el servidor en el puerto 3000
-app.listen(3000, () => {
-    console.log('Servidor correteando en el puerto 3000 (ultima modificación)');
-});
-
+app.listen(3000, function(){
+    console.log("Servidor corriendo en el puerto 3000 (ultima modificación) 3");
+})

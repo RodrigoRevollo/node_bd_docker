@@ -1,0 +1,4 @@
+mysql_data_service/
+node_modules/
+.git/
+*.log
