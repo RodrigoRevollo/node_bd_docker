@@ -1,12 +1,18 @@
 services:
   backend_node:
     container_name: backend_node
-    build: .
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
       - "81:3000"
+    environment:
+      PORT: ${PORT}
     depends_on:
-      - base_datos_mysql
-  
+      base_datos_mysql:
+        condition: service_healthy  # Espera a que el healthcheck de la BD pase
+    restart: unless-stopped
+
   base_datos_mysql:
     container_name: base_datos_mysql
     image: mysql:latest
@@ -18,7 +24,13 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data_service:/var/lib/mysql
-  
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   db_phpmyadmin:
     container_name: db_phpmyadmin
     image: phpmyadmin/phpmyadmin
@@ -30,7 +42,9 @@ services:
     ports:
       - "7777:80"
     depends_on:
-      - base_datos_mysql
+      base_datos_mysql:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   mysql_data_service:

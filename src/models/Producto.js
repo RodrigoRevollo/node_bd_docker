@@ -20,7 +20,7 @@ const Producto = sequelize.define(
         defaultValue: 0
         // allowNull defaults to true
       },
-      descripcion: {
+    descripcion: {
         type: DataTypes.TEXT,
         allowNull: true
         // allowNull defaults to true
